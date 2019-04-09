@@ -1,5 +1,7 @@
 package html
 
+import "io"
+
 type Node struct {
 	Type                    NodeType
 	Data                    string
@@ -23,3 +25,4 @@ type Attribute struct {
 }
 
 //func Parse(r io.Reader) (*Node, error)
+var Parse func(r io.Reader) (*Node, error)
