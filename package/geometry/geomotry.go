@@ -1,11 +1,17 @@
 package geometry
 
 import (
+	"image/color"
 	"math"
 )
 
 type Point struct {
 	X, Y float64
+}
+
+type ColoredPoint struct {
+	* Point
+	Color color.RGBA
 }
 
 func Distance(p, q Point) float64 {
@@ -28,6 +34,7 @@ func (path Path) Distance() float64 {
 	}
 	return sum
 }
+
 
 func (p *Point) ScaleBy(factor float64) {
 	p.X *= factor
