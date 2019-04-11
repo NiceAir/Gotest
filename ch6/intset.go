@@ -1,13 +1,14 @@
 package main
 
-
 import (
-	"fmt"
 	"Gotest/package/bitMap"
+	"fmt"
 )
 
 func main()  {
 	var x, y bitMap.IntSet
+
+	var _ fmt.Stringer = &x
 	x.Add(1)
 	x.Add(144)
 	x.Add(9)
@@ -36,5 +37,16 @@ func main()  {
 	x.Clear()
 	fmt.Println(&x)
 	fmt.Println(p)
+
+	var initial [64]byte
+	var buf []byte
+	fmt.Printf("%T %p\n", buf, buf)
+	fmt.Println(buf)
+	for i := 0; i<len(initial); i++ {
+		initial[i] = uint8(i)
+	}
+	buf = initial[:0]
+	fmt.Printf("%T %p\n", buf, buf)
+	fmt.Println(buf)
 
 }
