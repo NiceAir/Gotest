@@ -2,32 +2,10 @@ package main
 
 import (
 	"flag"
-	"fmt"
-	"io/ioutil"
-	"os"
-	"path/filepath"
+	"Gotest/package/du"
 )
 
-func walkDir(dir string, fileSizes chan <- int64)  {
-	for _, entry := range dirents(dir) {
-		if entry.IsDir() {
-			subdir := filepath.Join(dir, entry.Name())
-			walkDir(subdir, fileSizes)
-		} else {
-			fileSizes <- entry.Size()
-		}
-	}
-}
 
-func dirents(dir string) []os.FileInfo {
-	entries, err := ioutil.ReadDir(dir)
-
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "du1: %v\n", err)
-		return nil
-	}
-	return entries
-}
 
 func main()  {
 	flag.Parse()
@@ -40,7 +18,7 @@ func main()  {
 	fileSizes := make(chan int64)
 	go func() {
 		for _, root := range roots {
-			walkDir(root, fileSizes)
+			du.WalkDir(root, fileSizes)
 		}
 		close(fileSizes)
 	}()
@@ -50,9 +28,6 @@ func main()  {
 		nfiles++
 		nbytes += size
 	}
-	printDiskUsage(nfiles, nbytes)
+	du.PrintDiskUsage(nfiles, nbytes)
 }
 
-func printDiskUsage(nfiles, nbytes int64)  {
-	fmt.Printf("%d files    %.3f GB\n", nfiles, float64(nbytes)/1e9)
-}
