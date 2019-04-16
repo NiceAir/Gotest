@@ -46,6 +46,8 @@ loop:
 			}
 			nfiles++
 			nbytes += size
+		case <-done:
+			for range fileSize {}
 		case <- tick:
 			du.PrintDiskUsage(nfiles, nbytes)
 		}
@@ -56,7 +58,9 @@ loop:
 
 func walkDir(dir string, n *sync.WaitGroup, fileSize chan <- int64)  {
 	defer n.Done()
-
+	if cancelled() {
+		return
+	}
 	for _, entry := range du.Dirents(dir) {
 		if entry.IsDir() {
 			n.Add(1)

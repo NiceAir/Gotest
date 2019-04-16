@@ -32,11 +32,13 @@ func main()  {
 
 	case <-abort:
 		fmt.Println("发射中断")
-		return
+	//	return
 
-	//default:       //todo default执行一遍直接退出了  轮询？？ 怎么不行啊
+	//default:
 		//fmt.Println("---------------------")
 	}
+	fmt.Println("退出select");
+	time.Sleep(5 * time.Second)
 	//launch()
 }
 
