@@ -17,7 +17,7 @@ func main()  {
 	done := make(chan struct{})
 	go func() {
 		io.Copy(os.Stdout, conn)    //io.Copy本身会一直循环，当任意一端关闭后才退出循环
-		log.Println("服务器关闭")
+		log.Println("服务器断开...")
 		done <- struct{}{}
 	}()
 	go mustCopy(conn, os.Stdin)
